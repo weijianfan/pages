@@ -466,7 +466,7 @@ Dan在他的Black Hat演讲PPT中还给出了其他一些方法，有兴趣的�
 
 [^dagon]: Increased DNS forgery resistance through 0x20-bit encoding (https://astrolavos.gatech.edu/articles/increased_dns_resistance.pdf)
 
-感谢微信号@king432287 @simonzhao7727 @diifee @wenzel在本文撰写过程中予以的答疑解惑。
+感谢微信号 @king432287 @simonzhao7727 @diifee @wenzel 在本文撰写过程中予以的答疑解惑。
 
 本文采用**知识共享“署名-相同方式共享”4.0国际许可协议**进行许可
 
