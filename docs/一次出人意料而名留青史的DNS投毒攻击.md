@@ -1,6 +1,6 @@
 # 一次出人意料而名留青史的DNS投毒攻击
 
-![Dan](pic/dan.jpg)
+![Dan](pics/dan.jpg)
 
 2008年7月，在互联网上发生了一件极具历史意义的DNS安全事件，该事件一经发布，立即震动了整个互联网，因为，自1983年DNS被发明以来，人们还从未遇到过这类影响深远而易于实现的攻击。Cricket Liu, 《DNS and BIND》（O'Reilly出版）的作者， 认为这**可能是互联网历史上最大的一次DNS安全事件。**[^cory]
 
@@ -470,7 +470,7 @@ Dan在他的Black Hat演讲PPT中还给出了其他一些方法，有兴趣的�
 
 本文采用**知识共享“署名-相同方式共享”4.0国际许可协议**进行许可
 
-<div align=center>![qr](pic/man-mind.jpg)</center>
+<div align=center>![qr](pics/man-mind.jpg)</center>
 
 **关注本公众号“微月人话”（ID：man-mind）**，回复DNS，获取：
 
