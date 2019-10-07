@@ -34,7 +34,7 @@
 
 4、不管在我们的电脑上，还是手机上（以下统称为**终端**），都会设置有DNS服务器的地址（通常被自动配置而无需手工配置），终端需要解析的时候，就去问它，它如果知道答案，就直接回复；如果不知道，就去网上问，最终会把答案（也即那个IP）返回给终端。这个DNS服务器常被称为本地DNS，它可能确实在家里、企业里、机场里、咖啡馆里，也有可能不在本地，比如114.114.114.114或者8.8.8.8这样的公用DNS服务器。
 
-5、本地DNS可能是一个递归DNS，也可能只是一个DNS代理。递归DNS会不厌其烦地在互联网上尽力完成解析然后把结果返回终端，代理则只是把终端的请求转发给给真正干活的递归DNS，然后把递归DNS的答案转发给终端。<font color=blue>**本文为描述方便，略去DNS代理这种简单的情况，不再区分本地DNS和递归DNS，将其统一简写为LDNS**。</font>
+5、本地DNS可能是一个递归DNS，也可能只是一个DNS代理。递归DNS会不厌其烦地在互联网上尽力完成解析然后把结果返回终端，代理则只是把终端的请求转发给给真正干活的递归DNS，然后把递归DNS的答案转发给终端。**本文为描述方便，略去DNS代理这种简单的情况，不再区分本地DNS和递归DNS，将其统一简写为LDNS**。
 
 6、最主要的DNS服务器就两种：递归DNS服务器和权威DNS服务器，为什么称之为“权威”，是因为它说了算，他说哪个域名对应哪个IP就是哪个IP。
 
@@ -64,7 +64,7 @@
 DNS通常使用UDP包传输数据，从关系上讲，IP包里承载着UDP数据报，UDP数据报里承载着DNS报文，就像下面这样：
 
 ```
-	[IP包头[UDP报头[DNS数据报文]]]
+[IP包头[UDP报头[DNS数据报文]]]
 ```
 
 **在IP包头中，最重要的数据是源IP地址和目的IP地址。**
@@ -95,7 +95,7 @@ DNS查询报文和响应报文的格式是一样的，可以很精简地写成�
 
 
 ```
-	DNS报文：|QID|问题区|应答区|权威区|附加区|
+DNS报文：|QID|问题区|应答区|权威区|附加区|
 ```
 
 先看下最前面那个QID，QID即查询ID，是用于匹配查询报文和相应报文的，LDNS每次向外发出DNS查询报文，都会设置一个不同的QID，原因是同一时刻可能会有多个查询，有了QID，可以方便地把响应和查询匹配起来（响应报文中会填写和对应查询一致的QID）。
@@ -166,9 +166,9 @@ DNS查询报文和响应报文的格式是一样的，可以很精简地写成�
 
 
 ```
-	baidu.com.  NS  ns1.baidu.com.
-	baidu.com.  NS  ns2.baidu.com.
-	baidu.com.  NS  ns3.baidu.com.
+baidu.com.  NS  ns1.baidu.com.
+baidu.com.  NS  ns2.baidu.com.
+baidu.com.  NS  ns3.baidu.com.
 ```
 
 
@@ -183,9 +183,9 @@ DNS查询报文和响应报文的格式是一样的，可以很精简地写成�
 A记录就是最经典的域名和IP的对应，在ns1.baidu.com里面，记录着百度公司各产品的域名和IP的对应关系，每一个这样的记录，就是一个A记录，比如下面的3个A记录（随意举的例子，IP都是随意写的）。
 
 ```
-	image.baidu.com		A		1.2.3.4
-	wenku.baidu.com		A		5.6.7.8
-	tieba.baidu.com		A		9.10.11.12  
+image.baidu.com		A		1.2.3.4
+wenku.baidu.com		A		5.6.7.8
+tieba.baidu.com		A		9.10.11.12  
 ```
 
 如果有人问ns1.baidu.com：“wenku.baidu.com的IP是多少？”，ns1就会找到对应的A记录或者CNAME记录并返回。
@@ -197,7 +197,7 @@ A记录就是最经典的域名和IP的对应，在ns1.baidu.com里面，记录�
 比如，在ns1中，其实并没有www.baidu.com的A记录，而是一个CNAME记录：
 
 ```
-	www.baidu.com		CNAME	www.a.shifen.com
+www.baidu.com		CNAME	www.a.shifen.com
 ```
 
 这就是在告诉LDNS，www.baidu.com的别名是www.a.shifen.com，去解析www.a.shifen.com吧！
@@ -213,7 +213,7 @@ A记录就是最经典的域名和IP的对应，在ns1.baidu.com里面，记录�
 上面的那些例子中，为了简洁起见，没有列出TTL，事实上，一个完整的记录大概是这个样子：
 
 ```
-	baidu.com.		86400	IN	NS	ns3.baidu.com.
+baidu.com.		86400	IN	NS	ns3.baidu.com.
 ```
 
 其中的86400就是TTL，是以秒为单位的，86400也就是24小时即1天。
@@ -233,7 +233,7 @@ LDNS会去先看看自己有没有123.abc.qq.com.cn的A记录，要有就直接�
 再看一眼DNS报文结构：
 
 ```
-	|QID|问题区|应答区|权威区|附加区|
+|QID|问题区|应答区|权威区|附加区|
 ```
 
 查询报文（以下简称查询包）只是填写QID和问题区（也即要问什么），后面几个区不用填写内容。
@@ -250,29 +250,32 @@ LDNS会去先看看自己有没有123.abc.qq.com.cn的A记录，要有就直接�
 
 **附加区**（Additional Section）：这里存放附加的一些记录。比如在给出权威NS记录的同时，会把它的A记录放在这里（在NS记录中是不会有IP的），这样做的好处是可以解决鸡生蛋蛋生鸡的问题，比如你查www.baidu.com，权威告诉你去找ns.baidu.com，如果没有这个附加的A记录（又称胶水记录，glue record），你就得去问ns.baidu.com的A记录，然后权威又告诉你去找ns.baidu.com，这就进入一个无解的循环之中。
 
-现在我们看一个实例，一个LDNS要查询www.baidu.com，查询包里的内容大约是这样的：
+前面讲，LDNS查询www.baidu.com，baidu.com的权威DNS可能会回一个A记录，也可能回一个CNAME记录，具体如何？我们实际看一下。
+
+查询包大约是这样的：
 
 ```
-	QID：6012
-	问题区：  www.baidu.com A
-	应答区：（空）
-	权威区：（空）
-	附加区：（空）
+QID：6012
+问题区：  www.baidu.com A
+应答区：（空）
+权威区：（空）
+附加区：（空）
 ```
 
-假设这个报文是发给了ns1.baidu.com，响应包大约是这样的：
+通过抓包，可以看到响应包大约是这样的：
 
 ```
-	QID：6012
-	问题区：www.baidu.com A
-	应答区：www.baidu.com.	CNAME	www.a.shifen.com.
-	权威区：
-  			a.shifen.com.		NS	ns1.a.shifen.com.
+QID：6012
+问题区：www.baidu.com A
+应答区：www.baidu.com.	CNAME	www.a.shifen.com.
+权威区：
+ 		a.shifen.com.		NS	ns1.a.shifen.com.
     		a.shifen.com.		NS	ns2.a.shifen.com.
-	附加区：
-   			ns2.a.shifen.com.	A 	61.135.165.224
- 			ns2.a.shifen.com.	A 	220.181.33.32
+附加区：
+  		ns2.a.shifen.com.	A 	61.135.165.224
+ 		ns2.a.shifen.com.	A 	220.181.33.32
 ```
+由于得到的是CNAME记录，LDNS为了得到IP，还会继续发起对www.a.shifen.com的查询，最终获得其IP。
 
 现在，有了这些基础知识，基本上就差不多了，我们看看Kaminsky攻击是怎么做到的。
 
@@ -347,10 +350,10 @@ Dan会去问类似1.foo.com、2.foo.com、3.foo.com等等这些大概率就完�
 Dan伪造的响应包，大约是这个样子：
 
 ```
-	问题区：83.foo.com  A
-	应答区：（空）
-	权威区：foo.com  NS www.foo.com
-	附加区：www.foo.com  A 6.6.6.6
+问题区：83.foo.com  A
+应答区：（空）
+权威区：foo.com  NS www.foo.com
+附加区：www.foo.com  A 6.6.6.6
 ```
 
 这个响应的意思是：“我不知道83.foo.com的A记录，你去问问www.foo.com吧，它负责foo.com这个域，对了，他的IP是6.6.6.6”。
@@ -371,13 +374,13 @@ Dan伪造的响应包，大约是这个样子：
 为了理解bailiwick检查，可以看一个简单的例子：
 
 ```
-	问题区:
-		www.foo.com  A 1.2.3.4
-	权威区:
-		foo.com 	NS	ns1.foo.com
-	附加区:
-		ns1.foo.com A 2.3.4.5
-		www.bar.com A 6.6.6.6
+问题区:
+	www.foo.com  A 1.2.3.4
+权威区:
+	foo.com 	NS	ns1.foo.com
+附加区:
+	ns1.foo.com A 2.3.4.5
+	www.bar.com A 6.6.6.6
 ```
 
 上面例子中，用户请求www.foo.com的时候，响应包里出现关于www.bar.com的记录，DNS将根据bailiwick检查规则，不会接受将此A记录。更多关于bailiwick检查的知识可见本文参考资料[^shmat]。
@@ -394,19 +397,19 @@ bailiwick检查自1997年就已经被普遍重视和实现了，在人们觉得�
 Dan在黑帽大会的演讲中，指出有很多种方法可以突破，这里举其中一个比较浅显的例子：比如设法让企业内部的人浏览一个含有很多链接的网页，这些链接分别指向1.badguy.com（badguy是被攻击者控制的域名）、2.badguy.com、3.badguy.com、4.badguy.com……等等，一旦ns.badguy.com收到关于1.badguy.com的解析请求，他就知道该网页开始被浏览了，针对1.badguy.com请求，它会回一个：
 
 ```
-	问题区：1.badguy.com  A  
-	应答区：（空）
-	权威区：badguy.com  NS  1.foo.com
-	附加区：（空）
+问题区：1.badguy.com  A  
+应答区：（空）
+权威区：badguy.com  NS  1.foo.com
+附加区：（空）
 ```
 
 这是一个典型的“去问别人吧”（refrral）回应，也即告诉LDNS去问1.foo.com，攻击者知道，LDNS收到这个响应后，会发起关于1.foo.com的查询，所以攻击者立刻发送一波伪造的响应给LDNS，这些响应使用不同的QID来猜测，内容则是：
 
 ```
-	问题区：1.foo.com  A  
-	应答区：（空）
-	权威区：foo.com NS www.foo.com
-	附加区：www.foo.com  A   6.6.6.6
+问题区：1.foo.com  A  
+应答区：（空）
+权威区：foo.com NS www.foo.com
+附加区：www.foo.com  A   6.6.6.6
 ```
 
 看到这里，你就明白，这就和前面的攻击模式一样了。
@@ -414,19 +417,19 @@ Dan在黑帽大会的演讲中，指出有很多种方法可以突破，这里�
 也许又是在第83次，攻击者又成功了～
 
 ```
-	问题区：83.foo.com  A  
-	应答区：（空）
-	权威区：foo.com NS www.foo.com
-	附加区：www.foo.com A 6.6.6.6
+问题区：83.foo.com  A  
+应答区：（空）
+权威区：foo.com NS www.foo.com
+附加区：www.foo.com A 6.6.6.6
 ```
 
 攻击者为什么不一开始就直接像下面这样回应呢：
 
 ```
-	问题区：1.badguy.com  A  
-	应答区：（空）
-	权威区：badguy.com NS www.foo.com
-	附加区：www.foo.com  A   6.6.6.6
+问题区：1.badguy.com  A  
+应答区：（空）
+权威区：badguy.com NS www.foo.com
+附加区：www.foo.com  A   6.6.6.6
 ```
 这样难道不是更直接更迅速吗？都不用猜QID了。
 
@@ -450,27 +453,31 @@ Dan在他的Black Hat演讲PPT中还给出了其他一些方法，有兴趣的�
 
  参考资料：
 
-[^cert]: Multiple DNS implementations vulnerable to cache poisoning (https://www.kb.cert.org/vuls/id/800113/)
+[^cert]: [Multiple DNS implementations vulnerable to cache poisoning](https://www.kb.cert.org/vuls/id/800113/)
 
-[^dmk]: It’s The End Of The Cache As We Know It (https://www.slideshare.net/dakami/dmk-bo2-k8)
+[^dmk]: [It’s The End Of The Cache As We Know It](https://www.slideshare.net/dakami/dmk-bo2-k8)
 
-[^steve]: An Illustrated Guide to the Kaminsky DNS Vulnerability (http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html)
+[^steve]: [An Illustrated Guide to the Kaminsky DNS Vulnerability](http://www.unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html)
 
-[^cory]: Understanding Kaminsky's DNS Bug ( https://www.linuxjournal.com/content/understanding-kaminskys-dns-bug )
+[^cory]: [Understanding Kaminsky's DNS Bug]( https://www.linuxjournal.com/content/understanding-kaminskys-dns-bug )
 
-[^circle]: Not a Guessing Game (http://www.circleid.com/posts/87143_dns_not_a_guessing_game/)
+[^circle]: [Not a Guessing Game](http://www.circleid.com/posts/87143_dns_not_a_guessing_game/)
 
-[^shmat]: The Hitchhiker’s Guide to DNS Cache Poisoning (https://www.cs.cornell.edu/~shmat/shmat_securecomm10.pdf)
+[^shmat]: [The Hitchhiker’s Guide to DNS Cache Poisoning](https://www.cs.cornell.edu/~shmat/shmat_securecomm10.pdf)
 
-[^Joe]: DNS Cache Poisoning - The Next Generation (http://www.ouah.org/DNScp.htm)
+[^Joe]: [DNS Cache Poisoning - The Next Generation](http://www.ouah.org/DNScp.htm)
 
-[^dagon]: Increased DNS forgery resistance through 0x20-bit encoding (https://astrolavos.gatech.edu/articles/increased_dns_resistance.pdf)
+[^dagon]: [Increased DNS forgery resistance through 0x20-bit encoding](https://astrolavos.gatech.edu/articles/increased_dns_resistance.pdf)
 
 感谢微信号 @king432287 @simonzhao7727 @diifee @wenzel 在本文撰写过程中予以的答疑解惑。
 
-本文采用**知识共享“署名-相同方式共享”4.0国际许可协议**进行许可
+本文采用**知识共享“署名-相同方式共享”4.0国际许可协议**进行许可。
 
+<<<<<<< HEAD
 [qr](pics/man-mind.jpg)
+=======
+![qr](pics/man-mind.jpg)
+>>>>>>> 81c1991681fe3229b25382a4c03aeba8737f8d43
 
 **关注本公众号“微月人话”（ID：man-mind）**，回复DNS，获取：
 
