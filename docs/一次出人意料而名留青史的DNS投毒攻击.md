@@ -470,7 +470,7 @@ Dan在他的Black Hat演讲PPT中还给出了其他一些方法，有兴趣的�
 
 本文采用**知识共享“署名-相同方式共享”4.0国际许可协议**进行许可
 
-<div align=center>![qr](pics/man-mind.jpg)</center>
+[qr](pics/man-mind.jpg)
 
 **关注本公众号“微月人话”（ID：man-mind）**，回复DNS，获取：
 
